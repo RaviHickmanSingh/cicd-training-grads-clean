@@ -10,3 +10,6 @@ jobs:
     steps:
       - name: Say hello
         run: echo "${{ github.actor }}"
+      - name: Secret hello
+        run: echo "${{ secrets.NAME }}"
+
