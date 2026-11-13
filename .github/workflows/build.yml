@@ -1,16 +1,25 @@
-name: 2 - Task 2
+name: 2 - Task 3/4
 
 # Run manually from the Actions tab ("Run workflow" button)
 on:
   workflow_dispatch:
+  pull_request: 
+    branches: [main]
 
 jobs:
-  hello:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Say hello
-        run: echo "${{ github.actor }}"
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+            distribution: 'temurin'
+            java-version: '21'
+            cache: 'maven'
+      - run: java --version
+      - name: Run with Maven
+        run: mvn -B test
       - name: Dock
         run: docker build -t cicd-training-2026 .
